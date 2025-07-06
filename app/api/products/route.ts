@@ -65,6 +65,11 @@ export async function POST(request: NextRequest) {
     // Validate required fields
     const { name, price, category, quantityInStock, minStockLevel } = body
     if (!name || !price || !category || quantityInStock === undefined || minStockLevel === undefined) {
+      console.log(name)
+      console.log(price)
+      console.log(category)
+      console.log(quantityInStock)
+      console.log(minStockLevel)
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
