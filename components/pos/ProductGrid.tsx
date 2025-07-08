@@ -62,45 +62,59 @@ export function ProductGrid({ products }: ProductGridProps) {
     )
   }
 
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+return (
+  <div className="max-h-[64vh] overflow-y-auto pr-2">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
       {products.map((product) => (
-        <Card key={product.id} className="hover:shadow-lg transition-shadow">
-          <CardContent className="p-4">
-            <div className="aspect-square bg-gray-100 rounded-lg mb-3 flex items-center justify-center">
-              <Package className="h-8 w-8 text-gray-400" />
+        <Card key={product.id} className="hover:shadow-md transition-shadow">
+          <CardContent className="p-3">
+            <div className="aspect-square bg-gray-100 rounded-md mb-2 flex items-center justify-center">
+              <Package className="h-6 w-6 text-gray-400" />
+              {/* {product.image} */}
             </div>
 
-            <div className="space-y-2">
-              <h3 className="font-medium text-sm text-gray-900 line-clamp-2">{product.name}</h3>
+            <div className="space-y-1">
+              <h3 className="font-medium text-xs text-gray-900 line-clamp-2">
+                {product.name}
+              </h3>
 
               <div className="flex items-center justify-between">
-                <span className="text-lg font-bold text-blue-600">${product.price.toFixed(2)}</span>
+                <span className="text-sm font-bold text-blue-600">
+                  ${product.price.toFixed(2)}
+                </span>
                 <Badge
                   variant={
-                    product.quantityInStock > 10 ? "default" : product.quantityInStock > 0 ? "secondary" : "destructive"
+                    product.quantityInStock > 10
+                      ? "default"
+                      : product.quantityInStock > 0
+                      ? "secondary"
+                      : "destructive"
                   }
-                  className="text-xs"
+                  className="text-[10px] px-2 py-0.5"
                 >
-                  {product.quantityInStock > 0 ? `${product.quantityInStock} left` : "Out of stock"}
+                  {product.quantityInStock > 0
+                    ? `${product.quantityInStock} left`
+                    : "Out of stock"}
                 </Badge>
               </div>
 
-              <p className="text-xs text-gray-600">{product.category}</p>
+              <p className="text-[10px] text-gray-500">{product.category}</p>
 
               <Button
                 size="sm"
-                className="w-full"
+                className="w-full h-7 text-xs"
                 onClick={() => handleAddToCart(product)}
                 disabled={product.quantityInStock <= 0}
               >
                 <Plus className="h-3 w-3 mr-1" />
-                Add to Cart
+                Add
               </Button>
             </div>
           </CardContent>
         </Card>
       ))}
     </div>
-  )
+  </div>
+)
+
 }
