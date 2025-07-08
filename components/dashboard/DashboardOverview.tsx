@@ -39,6 +39,7 @@ interface LowStockProduct {
   name: string;
   quantityInStock: number;
   minStockLevel: number;
+
 }
 
 export function DashboardOverview() {
@@ -100,6 +101,7 @@ export function DashboardOverview() {
             name: "Null",
             quantityInStock: 0,
             minStockLevel: 0,
+
           },
         ]);
       }
@@ -122,6 +124,7 @@ export function DashboardOverview() {
           name: "Null",
           quantityInStock: 0,
           minStockLevel: 0,
+
         },
         
       ]);
