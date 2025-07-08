@@ -129,52 +129,52 @@ export function LowStockAlert() {
     return null;
   }
 
-  return (
-    <Card className="border-orange-200 bg-orange-50">
-      <CardHeader>
-        <CardTitle className="flex items-center text-orange-800">
-          <AlertTriangle className="mr-2 h-5 w-5" />
-          Low Stock Alert
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {Array.isArray(lowStockProducts.products) &&
-            lowStockProducts.products.map((item) => (
-              <div
-                key={item.id}
-                className={`flex items-center justify-between p-3 rounded-lg ${
-                  item.quantityInStock === 0
-                    ? "bg-red-100 border border-red-400"
-                    : "bg-white"
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <Package className="h-4 w-4 text-orange-600" />
-                  <div>
-                    <p className="font-medium text-gray-900">{item.name}</p>
-                    <p className="text-sm text-gray-600">
-                      {item.quantityInStock} left (min: {item.minStockLevel})
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Badge variant="outline">{item.category}</Badge>
-                  <Button size="sm" variant="outline">
-                    Reorder
-                  </Button>
+return (
+  <Card className="border-orange-200 bg-orange-50">
+    <CardHeader>
+      <CardTitle className="flex items-center text-orange-800">
+        <AlertTriangle className="mr-2 h-5 w-5" />
+        Low Stock Alert
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="space-y-3 max-h-[360px] overflow-y-auto pr-1">
+        {Array.isArray(lowStockProducts.products) &&
+          lowStockProducts.products.map((item) => (
+            <div
+              key={item.id}
+              className={`flex items-center justify-between p-3 rounded-lg ${
+                item.quantityInStock === 0
+                  ? "bg-red-100 border border-red-400"
+                  : "bg-white"
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <Package className="h-4 w-4 text-orange-600" />
+                <div>
+                  <p className="font-medium text-gray-900">{item.name}</p>
+                  <p className="text-sm text-gray-600">
+                    {item.quantityInStock} left (min: {item.minStockLevel})
+                  </p>
                 </div>
               </div>
-            ))}
+              <div className="flex items-center space-x-2">
+                <Badge variant="outline">{item.category}</Badge>
+                <Button size="sm" variant="outline">
+                  Reorder
+                </Button>
+              </div>
+            </div>
+          ))}
 
-          {/* Optional fallback message if no low stock products */}
-          {lowStockProducts.products?.length === 0 && (
-            <p className="text-sm text-gray-600 text-center">
-              No low stock products.
-            </p>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
+        {lowStockProducts.products?.length === 0 && (
+          <p className="text-sm text-gray-600 text-center">
+            No low stock products.
+          </p>
+        )}
+      </div>
+    </CardContent>
+  </Card>
+);
+
 }
