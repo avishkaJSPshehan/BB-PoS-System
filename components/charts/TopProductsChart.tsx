@@ -1,17 +1,29 @@
-"use client"
+"use client";
 
-import { Badge } from "@/components/ui/badge"
+import { useEffect, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+
+interface TopProduct {
+  name: string;
+  sales: number;
+  revenue: number;
+}
 
 export function TopProductsChartImpl() {
-  const topProducts = [
-    { name: "iPhone 15 Pro", sales: 45, revenue: 44999.55 },
-    { name: "Samsung Galaxy S24", sales: 38, revenue: 34199.62 },
-    { name: "MacBook Air M3", sales: 22, revenue: 28599.78 },
-    { name: "Nike Air Max", sales: 67, revenue: 8709.33 },
-    { name: "Apple Watch Series 9", sales: 31, revenue: 12399.69 },
-  ]
+  const [topProducts, setTopProducts] = useState<TopProduct[]>([]);
+  const [maxRevenue, setMaxRevenue] = useState(0);
 
-  const maxRevenue = Math.max(...topProducts.map((p) => p.revenue))
+  useEffect(() => {
+    fetch("/api/sales/top-products")
+      .then((res) => res.json())
+      .then((data: TopProduct[]) => {
+        setTopProducts(data);
+        setMaxRevenue(Math.max(...data.map((p) => p.revenue)));
+      })
+      .catch((err) => {
+        console.error("Failed to load top products:", err);
+      });
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -25,20 +37,24 @@ export function TopProductsChartImpl() {
               <span className="font-medium text-sm">{product.name}</span>
             </div>
             <div className="text-right">
-              <div className="text-sm font-medium">${product.revenue.toLocaleString()}</div>
+              <div className="text-sm font-medium">
+                ${product.revenue.toLocaleString()}
+              </div>
               <div className="text-xs text-gray-600">{product.sales} units</div>
             </div>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
               className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(product.revenue / maxRevenue) * 100}%` }}
+              style={{
+                width: `${(product.revenue / maxRevenue) * 100}%`,
+              }}
             />
           </div>
         </div>
       ))}
     </div>
-  )
+  );
 }
 
-export default TopProductsChartImpl
+export default TopProductsChartImpl;

@@ -287,7 +287,7 @@ export function DashboardOverview() {
             <CardDescription>Daily sales for the past 7 days</CardDescription>
           </CardHeader>
           <CardContent>
-            {/* <SalesChart /> */}
+            <SalesChart />
           </CardContent>
         </Card>
 
@@ -299,7 +299,7 @@ export function DashboardOverview() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* <TopProductsChart /> */}
+            <TopProductsChart />
           </CardContent>
         </Card>
       </div>
@@ -308,7 +308,7 @@ export function DashboardOverview() {
       <LowStockAlert />
 
       {/* Recent Activity */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Recent Activity</CardTitle>
           <CardDescription>
@@ -357,7 +357,7 @@ export function DashboardOverview() {
             ))}
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }

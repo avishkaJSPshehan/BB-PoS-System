@@ -47,7 +47,7 @@ export function SalesChartImpl() {
       const y = canvas.height - padding - barHeight
 
       // Draw bar
-      ctx.fillStyle = "#3b82f6"
+      ctx.fillStyle = "#34a8eb"
       ctx.fillRect(x, y, barWidth, barHeight)
 
       // Draw value on top of bar

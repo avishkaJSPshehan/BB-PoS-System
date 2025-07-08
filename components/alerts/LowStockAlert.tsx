@@ -143,7 +143,11 @@ export function LowStockAlert() {
             lowStockProducts.products.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between p-3 bg-white rounded-lg"
+                className={`flex items-center justify-between p-3 rounded-lg ${
+                  item.quantityInStock === 0
+                    ? "bg-red-100 border border-red-400"
+                    : "bg-white"
+                }`}
               >
                 <div className="flex items-center space-x-3">
                   <Package className="h-4 w-4 text-orange-600" />
@@ -161,10 +165,7 @@ export function LowStockAlert() {
                   </Button>
                 </div>
               </div>
-              
             ))}
-
-            
 
           {/* Optional fallback message if no low stock products */}
           {lowStockProducts.products?.length === 0 && (
