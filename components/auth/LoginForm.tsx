@@ -104,7 +104,7 @@ export function LoginForm() {
           </CardContent>
         </Card>
 
-        <Card>
+        {/* <Card>
           <CardHeader>
             <CardTitle className="text-sm">Demo Credentials</CardTitle>
           </CardHeader>
@@ -120,7 +120,7 @@ export function LoginForm() {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </div>
   )
