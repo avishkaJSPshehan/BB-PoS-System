@@ -1,15 +1,124 @@
 "use client"
 
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { AlertTriangle, Package } from "lucide-react"
 
+
+interface LowStockAlertStats {
+  totalSales: number;
+  totalOrders: number;
+  totalProducts: number;
+  totalUsers: number;
+  lowStockCount: number;
+  outOfStockCount: number;
+  todaySales: number;
+  monthSales: number;
+}
+
+interface LowStockProduct {
+  id: string;
+  name: string;
+  quantityInStock: number;
+  minStockLevel: number;
+}
+
+
 export function LowStockAlert() {
+
+  const [stats, setStats] = useState<LowStockAlertStats>({
+      totalSales: 0,
+      totalOrders: 0,
+      totalProducts: 0,
+      totalUsers: 0,
+      lowStockCount: 0,
+      outOfStockCount: 0,
+      todaySales: 0,
+      monthSales: 0,
+    });
+    const [lowStockProducts, setLowStockProducts] = useState<LowStockProduct[]>(
+      []
+    );
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+    useEffect(() => {
+      fetchDashboardData();
+    }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      setIsLoading(true);
+
+      // Fetch dashboard statistics
+      const [statsResponse, lowStockResponse] = await Promise.all([
+        fetch("/api/dashboard/stats"),
+        fetch("/api/products/low-stock"),
+      ]);
+
+      if (statsResponse.ok) {
+        const statsData = await statsResponse.json();
+        setStats(statsData);
+      } else {
+        // Fallback to dummy data if API fails
+        setStats({
+          totalSales: 0.0,
+          totalOrders: 0,
+          totalProducts: 0,
+          totalUsers: 0,
+          lowStockCount: 0,
+          outOfStockCount: 0,
+          todaySales: 0,
+          monthSales: 0,
+        });
+      }
+
+      if (lowStockResponse.ok) {
+        const lowStockData = await lowStockResponse.json();
+        setLowStockProducts(lowStockData);
+      } else {
+        // Fallback to dummy data if API fails
+        setLowStockProducts([
+          {
+            id: "1",
+            name: "Null",
+            quantityInStock: 0,
+            minStockLevel: 0,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+      // Fallback to dummy data on error
+      setStats({
+        totalSales: 0,
+        totalOrders: 0,
+        totalProducts: 0,
+        totalUsers: 0,
+        lowStockCount: 0,
+        outOfStockCount: 0,
+        todaySales: 0,
+        monthSales: 0,
+      });
+      setLowStockProducts([
+        {
+          id: "1",
+          name: "Null",
+          quantityInStock: 0,
+          minStockLevel: 0,
+        },
+        
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const lowStockItems = [
     { id: "1", name: "Nike Air Max", currentStock: 3, minStock: 20, category: "Footwear" },
-    { id: "2", name: "iPhone 15 Pro", currentStock: 8, minStock: 10, category: "Electronics" },
-    { id: "3", name: "Samsung Earbuds", currentStock: 2, minStock: 15, category: "Electronics" },
   ]
 
   if (lowStockItems.length === 0) {
