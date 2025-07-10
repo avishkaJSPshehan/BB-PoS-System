@@ -138,7 +138,7 @@ return (
       </CardTitle>
     </CardHeader>
     <CardContent>
-      <div className="space-y-3 max-h-[360px] overflow-y-auto pr-1">
+      <div className="space-y-1 max-h-[300px] overflow-y-auto pr-1">
         {Array.isArray(lowStockProducts.products) &&
           lowStockProducts.products.map((item) => (
             <div

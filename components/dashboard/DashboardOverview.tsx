@@ -279,7 +279,7 @@ export function DashboardOverview() {
       {/* Charts and Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
-          <CardHeader>
+          {/* <CardHeader>
             <CardTitle className="flex items-center">
               <BarChart3 className="mr-2 h-5 w-5" />
               Sales Overview
@@ -288,7 +288,9 @@ export function DashboardOverview() {
           </CardHeader>
           <CardContent>
             <SalesChart />
-          </CardContent>
+            
+          </CardContent> */}
+          <LowStockAlert />
         </Card>
 
         <Card>
@@ -305,7 +307,7 @@ export function DashboardOverview() {
       </div>
 
       {/* Low Stock Alert */}
-      <LowStockAlert />
+      {/* <LowStockAlert /> */}
 
       {/* Recent Activity */}
       {/* <Card>
