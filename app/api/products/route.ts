@@ -1,21 +1,21 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { getDatabase } from "@/lib/mongodb"
+import { type NextRequest, NextResponse } from "next/server";
+import { getDatabase } from "@/lib/mongodb";
 
 export async function GET(request: NextRequest) {
   try {
-    const db = await getDatabase()
-    const { searchParams } = new URL(request.url)
-    const category = searchParams.get("category")
-    const search = searchParams.get("search")
-    const page = Number.parseInt(searchParams.get("page") || "1")
-    const limit = Number.parseInt(searchParams.get("limit") || "50")
-    const skip = (page - 1) * limit
+    const db = await getDatabase();
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get("category");
+    const search = searchParams.get("search");
+    const page = Number.parseInt(searchParams.get("page") || "1");
+    const limit = Number.parseInt(searchParams.get("limit") || "50");
+    const skip = (page - 1) * limit;
 
-    const query: any = { isActive: true }
+    const query: any = { isActive: true };
 
     // Add category filter if provided
     if (category && category !== "all") {
-      query.category = category
+      query.category = category;
     }
 
     // Add search filter if provided
@@ -24,12 +24,18 @@ export async function GET(request: NextRequest) {
         { name: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } },
         { barcode: { $regex: search, $options: "i" } },
-      ]
+      ];
     }
 
-    const products = await db.collection("products").find(query).sort({ name: 1 }).skip(skip).limit(limit).toArray()
+    const products = await db
+      .collection("products")
+      .find(query)
+      .sort({ name: 1 })
+      .skip(skip)
+      .limit(limit)
+      .toArray();
 
-    const total = await db.collection("products").countDocuments(query)
+    const total = await db.collection("products").countDocuments(query);
 
     // Transform the data to include string IDs and proper structure
     const formattedProducts = products.map((product) => ({
@@ -48,29 +54,42 @@ export async function GET(request: NextRequest) {
       isActive: product.isActive !== false,
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,
-    }))
+    }));
 
-    return NextResponse.json(formattedProducts)
+    return NextResponse.json(formattedProducts);
   } catch (error) {
-    console.error("Error fetching products:", error)
-    return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 })
+    console.error("Error fetching products:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch products" },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const db = await getDatabase()
-    const body = await request.json()
+    const db = await getDatabase();
+    const body = await request.json();
 
     // Validate required fields
-    const { name, price, category, quantityInStock, minStockLevel } = body
-    if (!name || !price || !category || quantityInStock === undefined || minStockLevel === undefined) {
-      console.log(name)
-      console.log(price)
-      console.log(category)
-      console.log(quantityInStock)
-      console.log(minStockLevel)
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    const { name, sellingPrice, category, quantityInStock, minStockLevel } =
+      body;
+    if (
+      !name ||
+      !sellingPrice ||
+      !category === undefined ||
+      quantityInStock === undefined ||
+      minStockLevel === undefined
+    ) {
+      console.log(name);
+      console.log(sellingPrice);
+      console.log(category);
+      console.log(quantityInStock);
+      console.log(minStockLevel);
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
     }
 
     const newProduct = {
@@ -87,19 +106,22 @@ export async function POST(request: NextRequest) {
       isActive: true,
       createdAt: new Date(),
       updatedAt: new Date(),
-    }
+    };
 
-    const result = await db.collection("products").insertOne(newProduct)
+    const result = await db.collection("products").insertOne(newProduct);
 
     const createdProduct = {
       ...newProduct,
       id: result.insertedId.toString(),
       _id: result.insertedId.toString(),
-    }
+    };
 
-    return NextResponse.json(createdProduct, { status: 201 })
+    return NextResponse.json(createdProduct, { status: 201 });
   } catch (error) {
-    console.error("Error creating product:", error)
-    return NextResponse.json({ error: "Failed to create product" }, { status: 500 })
+    console.error("Error creating product:", error);
+    return NextResponse.json(
+      { error: "Failed to create product" },
+      { status: 500 }
+    );
   }
 }
