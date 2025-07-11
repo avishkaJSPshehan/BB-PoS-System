@@ -96,7 +96,7 @@ export function InvoiceModal({ isOpen, onClose, saleData }: InvoiceModalProps) {
                 </Badge>
               </p>
               <p>
-                <span className="text-gray-600">Amount Paid:</span> ${saleData.paymentAmount.toFixed(2)}
+                <span className="text-gray-600">Amount Paid:</span> ${(saleData.paymentAmount ?? 0).toFixed(2)}
               </p>
               {saleData.change > 0 && (
                 <p>

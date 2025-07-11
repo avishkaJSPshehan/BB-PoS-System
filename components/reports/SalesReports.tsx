@@ -240,7 +240,7 @@ export function SalesReports() {
         description: "Sales report has been exported to PDF",
       })
     } catch (error) {
-      console.error("PDF export error:", error)
+      console.log("PDF export error:", error)
       toast({
         title: "Export Failed",
         description: "Failed to generate PDF report",
