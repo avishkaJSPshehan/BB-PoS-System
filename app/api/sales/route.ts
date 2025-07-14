@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
     const formattedSales = sales.map((sale) => ({
       id: sale._id.toString(),
-      _id: sale._id.toString(),
+      // _id: sale._id.toString(),
       ...sale,
     }))
 

@@ -151,7 +151,7 @@ export function PaymentModal({ isOpen, onClose, onPaymentComplete, total }: Paym
               onClick={handlePayment}
               disabled={paymentMethod === "cash" ? !isValidCashPayment : false}
               className="flex-1"
-              loading={isProcessing}
+              // loading={isProcessing}
             >
               {isProcessing ? "Processing..." : "Complete Payment"}
             </Button>

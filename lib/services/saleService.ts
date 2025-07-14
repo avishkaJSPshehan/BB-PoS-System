@@ -30,6 +30,7 @@ export class SaleService {
     // Generate sale number
     const saleCount = await collection.countDocuments()
     const saleNumber = `SALE-${Date.now()}-${saleCount + 1}`
+    console.log(saleNumber)
 
     // Update product stock
     for (const item of saleData.items) {
