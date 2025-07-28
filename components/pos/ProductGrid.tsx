@@ -63,8 +63,8 @@ export function ProductGrid({ products }: ProductGridProps) {
   }
 
 return (
-  <div className="max-h-[64vh] overflow-y-auto pr-2">
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+  <div className="max-h-[62vh] overflow-y-auto pr-2">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
       {products.map((product) => (
         <Card key={product.id} className="hover:shadow-md transition-shadow">
           <CardContent className="p-3">
