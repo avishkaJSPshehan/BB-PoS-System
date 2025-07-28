@@ -78,7 +78,7 @@ export function Sidebar({ activeView, setActiveView, isOpen, setIsOpen }: Sideba
         )}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b">
-          <h1 className="text-xl font-bold text-gray-800">POS System</h1>
+          <h1 className="text-xl font-bold text-gray-800">BB POS System</h1>
           <Button variant="ghost" size="sm" className="lg:hidden" onClick={() => setIsOpen(false)}>
             <X className="h-4 w-4" />
           </Button>
